@@ -18,6 +18,7 @@ type Counter struct {
 	CodeLines int // 代码行数
 }
 
+// 统计字数，多次统计数值会累加
 func (wc *Counter) Stat(str string) {
 	wc.Links = len(rxStrict.FindAllString(str, -1))
 	wc.Pics = len(imgReg.FindAllString(str, -1))
@@ -51,6 +52,16 @@ func (wc *Counter) Stat(str string) {
 	}
 
 	wc.Total = wc.Words + wc.Puncts
+}
+
+// 重置统计数值
+func (wc *Counter) Reset() {
+	wc.Total = 0
+	wc.Words = 0
+	wc.Puncts = 0
+	wc.Links = 0
+	wc.Pics = 0
+	wc.CodeLines = 0
 }
 
 // AutoSpace 自动给中英文之间加上空格
