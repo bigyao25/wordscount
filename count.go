@@ -31,10 +31,18 @@ func (wc *Counter) Stat(str string) {
 	// 普通的链接去除（非 HTML 标签链接）
 	str = rxStrict.ReplaceAllString(str, " ")
 	plainWords := strings.Fields(str)
+	//if str == "I'm Lily." {
+	//	log.Printf("============== strings.Fields: %q", plainWords)
+	//}
 
 	for _, plainWord := range plainWords {
 		words := strings.FieldsFunc(plainWord, func(r rune) bool {
-			if unicode.IsPunct(r) {
+			//if str == "I'm Lily." {
+			//	log.Printf("============== strings.FieldsFunc: [%s][%v]%v", plainWord, r, unicode.IsPunct(r))
+			//}
+			// I'm Lily. -- I'm 应该为一个单词
+			// non-smoker -- 应该为一个单词
+			if unicode.IsPunct(r) && r != '\'' && r != '-' {
 				wc.Puncts++
 				return true
 			}
